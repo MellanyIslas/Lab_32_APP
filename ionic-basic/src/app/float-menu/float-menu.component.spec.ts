@@ -1,24 +1,22 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { FloatMenuComponent } from './float-menu.component';
+@Component({
+  selector: 'app-float-menu',
+  templateUrl: './float-menu.component.html',
+  styleUrls: ['./float-menu.component.scss'],
+})
+export class FloatMenuComponent {
+  menuOpen: boolean = false;
 
-describe('FloatMenuComponent', () => {
-  let component: FloatMenuComponent;
-  let fixture: ComponentFixture<FloatMenuComponent>;
+  constructor(private router: Router) {}
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ FloatMenuComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 
-    fixture = TestBed.createComponent(FloatMenuComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+    this.menuOpen = false; // Cerrar el menú después de navegar
+  }
+}
