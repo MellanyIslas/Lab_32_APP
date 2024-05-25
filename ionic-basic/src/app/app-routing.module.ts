@@ -1,14 +1,23 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { GuardianGuard } from './service/guardian.guard';
+import { SeguridadRutasGuard } from './service/seguridad-rutas.guard';
 
 const routes: Routes = [
-  {path:'main',
-    children:[
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: '',
+    redirectTo: 'tabs',
+    pathMatch: 'full'
+  },
+  {
+    path:'main',
+    children: [
       {
         path: 'presupuesto',
-        loadChildren: () => import('./presupuesto/presupuesto.module').then( m => m.PresupuestoPageModule),
-        canActivate:[GuardianGuard]
+        loadChildren: () => import('./presupuesto/presupuesto.module').then( m => m.PresupuestoPageModule)
       },
       {
         path: 'alumnos',
@@ -27,10 +36,6 @@ const routes: Routes = [
         loadChildren: () => import('./receta/receta.module').then( m => m.RecetaPageModule)
       },
       {
-        path: 'detalle-receta',
-        loadChildren: () => import('./detalle-receta/detalle-receta.module').then( m => m.DetalleRecetaPageModule)
-      },
-      {
         path: 'tabs',
         loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
       },
@@ -39,22 +44,17 @@ const routes: Routes = [
         loadChildren: () => import('./destinos/destinos.module').then( m => m.DestinosPageModule)
       },
       {
+        path: 'detalle-receta',
+        loadChildren: () => import('./detalle-receta/detalle-receta.module').then( m => m.DetalleRecetaPageModule)
+      },
+      {
         path: 'destinos-api',
         loadChildren: () => import('./destinos-api/destinos-api.module').then( m => m.DestinosApiPageModule)
       }
     ],
-    canActivate: [GuardianGuard]
-  },
-
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
+    canActivate: [SeguridadRutasGuard]
+  }
+  ,
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
@@ -67,7 +67,6 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   }
-
 ];
 
 @NgModule({

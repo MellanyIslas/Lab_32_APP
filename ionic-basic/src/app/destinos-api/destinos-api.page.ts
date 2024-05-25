@@ -27,7 +27,7 @@ export class DestinosApiPage implements OnInit {
     this.buildForm();
     this.getPosition();
   }
-  
+
   getLugares(){
     this.lugarService.getLugaresApi().subscribe((response: Lugar[])=>{
       this.destinos = response;

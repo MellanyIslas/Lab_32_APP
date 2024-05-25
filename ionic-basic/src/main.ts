@@ -1,12 +1,20 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Component } from '@angular/core';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+@Component({
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+})
+export class HomePage {
+  loading: boolean = false;
 
-if (environment.production) {
-  enableProdMode();
+  startLoading() {
+    // Mostrar el spinner
+    this.loading = true;
+    // Simular una carga
+    setTimeout(() => {
+      // Ocultar el spinner después de 5 segundos (simulación de carga)
+      this.loading = false;
+    }, 5000);
+  }
 }
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));

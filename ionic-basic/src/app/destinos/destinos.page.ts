@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Lugar } from '../interface/lugar';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthFirebaseService } from '../service/auth-firebase.service';
-import { GoogleMapsComponent } from '../google-maps/google-maps.component';
+import { GooglemapsComponent } from '../componentes/googlemaps/googlemaps.component';
 import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-destinos',
-  templateUrl: './destinos.page.html'
+  templateUrl: './destinos.page.html',
+  styleUrls: ['./destinos.page.scss'],
 })
 export class DestinosPage implements OnInit {
 
@@ -23,9 +24,8 @@ export class DestinosPage implements OnInit {
     private authService: AuthFirebaseService,
     private formBuilder: FormBuilder,
     private modalController: ModalController
-  ) { 
-    
-  }
+  ) { }
+
   ngOnInit() {
     this.buildForm();
     this.authService.getLugares(this.destinos);
@@ -41,6 +41,8 @@ export class DestinosPage implements OnInit {
   ionViewWillEnter(){
     this.authService.getLugares(this.destinos);
   }
+
+
 
   altaLugar(){
     this.lugar.latitud = this.latitud;
@@ -72,7 +74,7 @@ export class DestinosPage implements OnInit {
         }).catch(e=>{
           console.error(e);
         });
-      }  
+      } 
     }
   }
 
@@ -83,8 +85,8 @@ export class DestinosPage implements OnInit {
   }  
 
   editarLugar(id: any, lugar: any) {
-    this.latitud = lugar.latitud;
-    this.longitud = lugar.longitud;
+    this.lugar.latitud = this.latitud;
+    this.lugar.longitud = this.longitud;
     this.editando = true;
     this.lugar = lugar;
     this.estado = "Editar el lugar";
@@ -98,6 +100,7 @@ export class DestinosPage implements OnInit {
     this.authService.deleteLugar(id).then(response=>{
       this.authService.getLugares(this.destinos);     
     }).catch(error=>{});
+
   }
 
   cancelarEdicion(){
@@ -108,6 +111,7 @@ export class DestinosPage implements OnInit {
     this.latitud = 0;
     this.longitud = 0;
   }
+
   getPosition(): Promise<any> {
 		return new Promise((resolve: any, reject: any): any => {
 			navigator.geolocation.getCurrentPosition((resp: any) => {
@@ -122,7 +126,7 @@ export class DestinosPage implements OnInit {
 				this.longitud = 0;
 			}, {timeout: 5000, enableHighAccuracy: true });
 		});
-	} 
+	}
 
   async addDirection(){
     let positionInput: any = {
@@ -131,7 +135,7 @@ export class DestinosPage implements OnInit {
     };
 
     const modalAdd = await this.modalController.create({
-      component: GoogleMapsComponent,
+      component: GooglemapsComponent,
       mode: 'ios',
       //swipeToClose: true,
       componentProps: {position: positionInput} 
@@ -148,5 +152,5 @@ export class DestinosPage implements OnInit {
       this.latitud = data.pos.lat;
       console.log('datos de ubiciacion actualizados, latitud: '+this.latitud+' \nlongitud:'+this.longitud);
     }
-  }  
+  } 
 }

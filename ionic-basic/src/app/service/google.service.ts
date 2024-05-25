@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 declare var google: any;
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +23,7 @@ export class GoogleService {
       const script =renderer.createElement('script');
       script.id ="googleMaps";
 
-      window.mapInit= () =>{
+      window.mapInit = () =>{
         this.mapsloaded = true;
         if(google){
           console.log('google is loaded');

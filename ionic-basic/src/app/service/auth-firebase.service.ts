@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { initializeApp } from "firebase/app"
+import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
+
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { User } from '../interface/user'
-import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { User } from '../interface/user';
 import { Lugar } from '../interface/lugar';
 
 const firebaseApp = initializeApp(environment.firebaseConfig);
 
 const dbCloudFirestore = getFirestore(firebaseApp);
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthFirebaseService {
   public isLoged : any = false;
   auth: Auth;
-  db = dbCloudFirestore;
 
+  db = dbCloudFirestore;
+  
   constructor() {
     this.auth = getAuth(firebaseApp);
+
     onAuthStateChanged(this.auth, user => {
       if(user!= undefined || user != null){
         this.isLoged = user;
@@ -28,22 +30,21 @@ export class AuthFirebaseService {
     });
    }
 
-
-   tieneSesion(){
-    return this.isLoged;
-   }
+  tieneSesion(){
+  return this.isLoged;
+  }
 
   getStateAuth(){
-  return this.auth;
+    return this.auth;
   }
-     //login
+      //login
   onLogin(user: User): Promise<any>{
       return signInWithEmailAndPassword(this.auth, user.email, user.password);
   }
-   //register
-   onRegister(user: User): Promise<any>{
-      return  createUserWithEmailAndPassword(this.auth, user.email, user.password);
-  }     
+    //register
+  onRegister(user: User): Promise<any>{
+    return  createUserWithEmailAndPassword(this.auth, user.email, user.password);
+  }   
 
   async altaLugar(lugar: Lugar){
     const lugarTemp: any ={
@@ -74,7 +75,7 @@ export class AuthFirebaseService {
       console.log('Ocurrio un erro en el guardardo:'+error);
     });
   } 
-
+  
   updateLugares(id: any, lugar: any): Promise<any>{
     const docRef = doc(this.db, 'lugar', id);
     const lugarAux = {nombre: lugar.nombre,
@@ -88,5 +89,5 @@ export class AuthFirebaseService {
   deleteLugar(id: any): Promise<any>{
     const docRef = doc(this.db, 'lugar', id);
     return deleteDoc(docRef);
-  } 
+  }
 }

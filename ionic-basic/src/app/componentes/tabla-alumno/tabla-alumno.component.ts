@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Alumno } from '../interface/alumno';
+import { Alumno } from 'src/app/interface/alumno';
 
 @Component({
-  selector: 'app-datos-alumnos',
-  templateUrl: './datos-alumnos.component.html'
+  selector: 'app-tabla-alumno',
+  templateUrl: './tabla-alumno.component.html'
 })
-export class DatosAlumnosComponent  implements OnInit {
+export class TablaAlumnoComponent  implements OnInit {
 
   @Input() alumnosList:Alumno[] =[];
   @Output() eliminar: any = new EventEmitter<Alumno>();

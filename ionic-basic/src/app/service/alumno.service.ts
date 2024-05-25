@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Alumno } from '../interface/alumno';
+import { Alumno } from '../interface/alumno'
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,6 @@ import { Alumno } from '../interface/alumno';
 export class AlumnoService {
 
   private alumnos: Alumno[]= [];
-
 
   constructor() { }
 
@@ -22,7 +21,8 @@ export class AlumnoService {
 
   public borrarAlumno(id: number){
     this.alumnos =
-    this.alumnos.filter(( al => al.id!=id ));
+    this.alumnos.filter(
+      ( al => al.id!=id ));
   }
 
   public getAlumos(): Alumno[]{
@@ -42,6 +42,4 @@ export class AlumnoService {
     });
     return this.alumnos;
   }
-
-
 }

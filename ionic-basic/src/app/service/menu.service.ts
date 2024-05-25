@@ -5,12 +5,12 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class MenuService {
-  private objectSource = new BehaviorSubject<string>("");
 
+  private objectSource = new BehaviorSubject<string>("");
   $getTitleMenu = this.objectSource.asObservable();
 
   constructor() { }
-  
+
   setTitle(data: any){
     this.objectSource.next(data);
   }

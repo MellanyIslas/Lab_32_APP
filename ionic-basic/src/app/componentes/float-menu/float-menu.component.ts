@@ -1,35 +1,40 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Menu } from '../interface/menu';
 import { Router } from '@angular/router';
+import { Menu } from 'src/app/interface/menu';
 import { Subscription } from 'rxjs';
-import { AuthFirebaseService } from '../service/auth-firebase.service';
-import { MenuService } from '../service/menu.service';
 import { onAuthStateChanged } from 'firebase/auth';
+import { MenuService } from 'src/app/service/menu.service';
+import { AuthFirebaseService } from 'src/app/service/auth-firebase.service';
 
 @Component({
   selector: 'app-float-menu',
   templateUrl: './float-menu.component.html',
   styleUrls: ['./float-menu.component.scss'],
 })
-export class FloatMenuComponent  implements OnInit, OnDestroy {
-
+export class FloatMenuComponent  implements OnInit {
   titleMenu: string='home';
+
   public isLoged : any = false;
 
-  public subscription : Subscription | undefined ;
+  private router: Router;
+
+  private menuService: MenuService;
+
+  private autService: AuthFirebaseService;
+
+  public subscription : Subscription = new Subscription();
 
   datosMenu: Menu[] =[
     {nombre: 'login',enlace:'/login',
     icono:'log-in-outline'},
-    {nombre: 'logout',enlace:'/home',
-    icono:'log-out-outline'}
   ];
 
-  constructor(
-    private autService: AuthFirebaseService,
-    private menuService: MenuService,
-    private router: Router
-  ) { 
+  constructor(private routeador: Router,
+    private firebaseService: AuthFirebaseService,
+    private servicioMenu: MenuService) {
+    this.router = routeador;
+    this.autService = firebaseService;
+    this.menuService = servicioMenu;
     onAuthStateChanged(this.autService.getStateAuth(), user=>{
       if(user!=null && user != undefined){
         this.isLoged = true;
@@ -41,21 +46,21 @@ export class FloatMenuComponent  implements OnInit, OnDestroy {
       this.titleMenu =data;
     });
 
-  }
-
-  ngOnDestroy(): void {
-    if(this.subscription != null || this.subscription!= undefined){
-      this.subscription.unsubscribe();
-    }
-  }
+   }
 
   ngOnInit() {}
 
   navegar(link: string, titleMenu: string){
     this.titleMenu =titleMenu;
-    this.menuService.setTitle(titleMenu);
     this.router.navigate([link]);
   }
+/** 
+  ngOnDestroy(): void {
+    if(this.subscription != null || this.subscription!= undefined){
+      this.subscription.unsubscribe();
+    }
+  }
+  */
 
   onMenuOpen(){
     onAuthStateChanged(this.autService.getStateAuth(), user=>{
@@ -73,8 +78,8 @@ export class FloatMenuComponent  implements OnInit, OnDestroy {
       icono:'airplane'},
       {nombre: 'Tabs',enlace:'/main/tabs',
       icono:'folder-outline'},
-      {nombre: 'login',enlace:'/login',
-      icono:'log-in-outline'},
+      {nombre: 'Presupuesto',enlace:'/main/presupuesto',
+    icono:'cash-outline'},
           {nombre: 'logout',enlace:'/logout',
           icono:'log-out-outline'}
         ];
@@ -83,12 +88,10 @@ export class FloatMenuComponent  implements OnInit, OnDestroy {
      else{
         this.datosMenu =[
           {nombre: 'login',enlace:'/login',
-          icono:'log-in-outline'},
-          {nombre: 'logout',enlace:'/logout',
-          icono:'log-out-outline'}
+          icono:'log-in-outline'}
+          
         ];
       }
     });
-  }
-
+  }  
 }

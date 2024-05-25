@@ -13,9 +13,10 @@ export class EnvioReceptorService {
   $getObjectSource = this.objectSource.asObservable();
   $getListSource = this.listSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+   }
 
-  sendObjectSource(data: any){
+   sendObjectSource(data: any){
     this.objectSource.next(data);
   }
 
@@ -29,5 +30,5 @@ export class EnvioReceptorService {
 
   getPersonaje(idPersonaje:string): Observable<any>{
     return this.http.get<any>(`http://swapi.dev/api/people/${idPersonaje}`,{});
-  }
+  }   
 }

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Receta } from '../interface/receta';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class RecetaService {
-
   recetas: Receta[]=[
     {
       id: 1, 
@@ -67,8 +67,9 @@ export class RecetaService {
       ]
     }
   ];
+
   constructor() { }
-  
+
   getReceta(idReceta: number){
     return {...this.recetas.find(
       (receta: Receta) =>{
@@ -79,5 +80,5 @@ export class RecetaService {
 
   getRecetas(){
     return [...this.recetas];
-  }
+  }  
 }

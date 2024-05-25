@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthFirebaseService } from './auth-firebase.service';
-
+import { MenuService } from './menu.service';
 @Injectable({
   providedIn: 'root'
 })
-export class GuardianGuard implements CanActivate {
+export class SeguridadRutasGuard implements CanActivate {
+
   constructor(
     private authService: AuthFirebaseService,
+    private menuService: MenuService,
     private router: Router
-    ){
+  ){
 
   }
 
@@ -22,6 +24,7 @@ export class GuardianGuard implements CanActivate {
       }
       else{
         console.log("Acceso denegado!");
+        this.menuService.setTitle("login");
         this.router.navigate(['/login']);
         return false;
       }

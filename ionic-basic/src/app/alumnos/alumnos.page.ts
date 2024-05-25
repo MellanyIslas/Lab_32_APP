@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Alumno } from '../interface/alumno';
-import { AlumnoService } from '../service/alumno.service';
-
+import { Component, OnInit } from '@angular/core'
+import { Alumno } from '../interface/alumno'
+import { AlumnoService } from '../service/alumno.service'
 
 @Component({
   selector: 'app-alumnos',
   templateUrl: './alumnos.page.html'
 })
-
 export class AlumnosPage implements OnInit {
 
   alumnos:Alumno[]= [];
@@ -16,7 +14,6 @@ export class AlumnosPage implements OnInit {
   estado: string = '';
   idActualizar: any;
   error: boolean = false;
-
 
   constructor(private alumnoService: AlumnoService) { }
 

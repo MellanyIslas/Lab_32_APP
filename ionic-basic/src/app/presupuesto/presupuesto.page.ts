@@ -4,8 +4,7 @@ import { PresupuestoService } from '../service/presupuesto.service';
 
 @Component({
   selector: 'app-presupuesto',
-  templateUrl: './presupuesto.page.html',
-  styleUrls: ['./presupuesto.page.scss'],
+  templateUrl: './presupuesto.page.html'
 })
 export class PresupuestoPage implements OnInit {
 
@@ -31,7 +30,6 @@ export class PresupuestoPage implements OnInit {
   cambioValor(value: any){
     console.log(value);
   }
-  
   guardar(){
     this.resultados ="";
     if(this.monto!=null && this.selectedValue!=null && this.monto>0){

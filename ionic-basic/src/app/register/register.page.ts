@@ -15,12 +15,11 @@ export class RegisterPage implements OnInit {
   user: User = new User();
   formRegister : any;
 
-  constructor(
-    private autSvc: AuthFirebaseService,
-    private menuService: MenuService,
+  constructor(private menuService: MenuService,
     private router: Router,
+    private autSvc: AuthFirebaseService,
     private formBuilder: FormBuilder
-  ) { }
+    ) { }
 
   ngOnInit() {
     this.buildForm();
@@ -30,14 +29,18 @@ export class RegisterPage implements OnInit {
     this.autSvc.onRegister(this.user).then(user=>{
       if(user){
         console.log('Successfully created user!');
-        this.menuService.setTitle('login');
-        this.router.navigate(['/login']);
+        this.menuService.setTitle("presupuesto");
+        this.router.navigate(['/presupuesto']);
       }
     }).catch(error=>{
       console.log('Error al crear usuario!');
     })
 
   } 
+  onLogin(){
+    this.menuService.setTitle("login");
+    this.router.navigate(["/login"]);
+  }
 
   buildForm(){
     this.formRegister = this.formBuilder.group({
@@ -63,4 +66,5 @@ export class RegisterPage implements OnInit {
 			this.formRegister.controls[controlName].hasError(errorName) &&
 			this.formRegister.controls[controlName].touched;
 	}
+
 }

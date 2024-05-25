@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Personaje } from '../interface/personaje';
 import { EnvioReceptorService } from '../service/envio-receptor.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -19,14 +19,13 @@ export class InicioPage implements OnInit {
   ];
 
   constructor(
-    private envioReceptor: EnvioReceptorService,
-    private router: Router
+    private router: Router,
+    private envioReceptor: EnvioReceptorService
     ) { }
 
   ngOnInit() {
   }
 
-  
   redireccionReceptor(){
     this.envioReceptor.sendObjectSource(this.user);
     this.envioReceptor.sendListSource(this.list);
