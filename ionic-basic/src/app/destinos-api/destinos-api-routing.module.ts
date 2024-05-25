@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root'
+import { DestinosApiPage } from './destinos-api.page';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: DestinosApiPage
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class FirebaseApiService {
-
-  constructor(private http: HttpClient) { }
-
-  getData() {
-    return this.http.get('https://ioniclab.firebaseio.com');
-  }
-
-  postData(data: any) {
-    return this.http.post('https://ioniclab.firebaseio.com', data);
-  }
-
-  
-}
+export class DestinosApiPageRoutingModule {}
